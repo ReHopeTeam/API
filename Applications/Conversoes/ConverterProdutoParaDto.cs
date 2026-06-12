@@ -13,8 +13,10 @@ namespace ReHope.Applications.Conversoes
                 NomeProduto = produto.NomeProduto,
                 Preco = produto.Preco,
                 Descricao = produto.Descricao,
+                Codigo = produto.Codigo,
                 StatusProduto = produto.StatusProduto,
                 CategoriaID = produto.CategoriaID,
+                LocalizacaoID = produto.LocalizacaoID,
                 Imagem = produto.Imagem,
                 UsuarioID = produto.UsuarioID,
 

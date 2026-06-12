@@ -65,17 +65,108 @@ namespace ReHope.Applications.Services
                 throw new DomainException("Descrição é obrigatória.");
             }
 
-            if (produtoDto.CategoriaID == null)
+            if (produtoDto.Tamanho == null)
+            {
+                throw new DomainException("Produto precisa de um tamanho.");
+            }
+
+            if (produtoDto.CategoriaID == 0)
             {
                 throw new DomainException("Produto precisa de uma categoria.");
             }
 
-            if (produtoDto.LocalizacaoID == null)
+            if (produtoDto.LocalizacaoID == 0)
             {
                 throw new DomainException("Produto precisa de uma localização.");
             }
         }
 
         //adicionar
-    }
+        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId, int codigo)
+        {
+            ValidarCadastro(produtoDto);
+
+            // ta errado
+            Produto produto = new Produto
+            {
+                NomeProduto = produtoDto.NomeProduto,
+                Preco = produtoDto.Preco,
+                Descricao = produtoDto.Descricao,
+                Tamanho = produtoDto.Tamanho,
+                Imagem = produtoDto.Imagem,
+                StatusProduto = true,
+                UsuarioID = usuarioId,
+                CategoriaID = produtoDto.CategoriaID
+            };
+
+            _repository.Adicionar(produto);
+
+            return ConverterProdutoParaDto.ConverterParaDto(produto);
+        }
+
+        public LerProdutoDto Atualizar(Guid id, AtualizarProdutoDto produtoDto)
+        {
+            Produto produtoBanco = _repository.ObterPorId(id);
+
+            if (produtoBanco == null)
+            {
+                throw new DomainException("Produto não encontrado.");
+            }
+
+            if (produtoDto.NomeProduto == null)
+            {
+                throw new DomainException("Produto precisa de um nome.");
+            }
+
+            if (produtoDto.Tamanho == null)
+            {
+                throw new DomainException("Produto precisa de um tamanho.");
+            }
+
+            if (produtoDto.LocalizacaoID == 0)
+            {
+                throw new DomainException("Produto precisa de uma localização.");
+            }
+
+            if (produtoDto.Preco < 0)
+            {
+                throw new DomainException("Preço deve ser maior que zero.");
+            }
+
+            if (produtoDto.Descricao.Length < 0)
+            {
+                throw new DomainException("Produto precisa de uma descrição.");
+            }
+
+            produtoBanco.NomeProduto = produtoDto.NomeProduto;
+            produtoBanco.Preco = produtoDto.Preco;
+            produtoBanco.Descricao = produtoDto.Descricao;
+            produtoBanco.CategoriaID = produtoDto.CategoriaID;
+
+            if (produtoDto.Imagem != null && produtoDto.Imagem.Length > 0)
+            {
+                produtoBanco.Imagem = produtoDto.Imagem;
+            }
+
+            if (produtoDto.StatusProduto != null)
+            {
+                produtoBanco.StatusProduto = produtoDto.StatusProduto.Value;
+            }
+
+            _repository.Atualizar(produtoBanco);
+            return ConverterProdutoParaDto.ConverterParaDto(produtoBanco);
+        }
+
+        public void Remover(Guid id)
+        {
+            Produto produto = _repository.ObterPorId(id);
+
+            if (produto == null)
+            {
+                throw new DomainException("Produto não encontrado.");
+            }
+
+            _repository.Remover(id);
+        }
+    } 
 }

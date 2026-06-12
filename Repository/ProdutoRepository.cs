@@ -80,7 +80,7 @@ namespace ReHope.Repository
                 produtoBanco.Imagem = produto.Imagem;
             }
 
-            if (produto.StatusProduto.HasValue)
+            if (produto.StatusProduto != false)
             {
                 produtoBanco.StatusProduto = produto.StatusProduto;
             }
@@ -100,6 +100,11 @@ namespace ReHope.Repository
 
             _context.Produto.Remove(produto);
             _context.SaveChanges();
+        }
+
+        public Localizacao BuscarLocalizacaoPorNome(string nomeLocalizacao)
+        {
+            return _context.Localizacao.FirstOrDefault(localizacao => localizacao.NomeLocalizacao.ToLower() == nomeLocalizacao.ToLower());
         }
     } 
 }
