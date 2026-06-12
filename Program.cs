@@ -1,6 +1,9 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using ReHope.Applications.Services;
 using ReHope.Contexts;
+using ReHope.Interfaces;
+using ReHope.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +35,9 @@ builder.Services.AddCors(options =>
         });
 });
 
-
+// LogProduto
+builder.Services.AddScoped<ILogProdutoRepository, LogProdutoRepository>();
+builder.Services.AddScoped<LogProdutoService>();
 
 var app = builder.Build();
 

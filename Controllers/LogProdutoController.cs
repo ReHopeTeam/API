@@ -18,7 +18,7 @@ namespace ReHope.Controllers
             _service = service;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public ActionResult<List<LerLogProdutoDto>> Listar()
         {
@@ -26,8 +26,8 @@ namespace ReHope.Controllers
             return Ok(logProdutoDtos);
         }
 
-        [Authorize]
-        [HttpGet("produto/{id}")]
+        //[Authorize]
+        [HttpGet("produto")]
         public ActionResult<List<LerLogProdutoDto>> BuscarLogProdutoPorPodutoId(Guid produtoId)
         {
             try
