@@ -11,7 +11,11 @@ namespace ReHope.Interfaces
 
         Usuario? ObterPorEmail(string email);
 
+        Usuario? ObterPorTelefone(string telefone);
+
         bool EmailExiste(string email);
+
+        bool TelefoneExiste(string telefone);
 
         void Adicionar (Usuario usuario);
 

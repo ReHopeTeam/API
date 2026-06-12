@@ -28,9 +28,19 @@ namespace ReHope.Repository
             return _context.Usuario.FirstOrDefault(usuario => usuario.Email == email);
         }
 
+        public Usuario? ObterPorTelefone(string telefone)
+        {
+            return _context.Usuario.FirstOrDefault(u => u.Telefone == telefone);
+        }
+
         public bool EmailExiste(string email)
         {
             return _context.Usuario.Any(usuario => usuario.Email == email);
+        }
+
+        public bool TelefoneExiste(string telefone)
+        {
+            return _context.Usuario.Any(u => u.Telefone == telefone);
         }
 
         public void Adicionar (Usuario usuario)

@@ -1,6 +1,9 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using ReHope.Applications.Services;
 using ReHope.Contexts;
+using ReHope.Interfaces;
+using ReHope.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING"
 builder.Services.AddDbContext<ReHopeContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<UsuarioService>();
 
 
 

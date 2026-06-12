@@ -14,9 +14,17 @@ namespace ReHope.Applications.Regras
 
         public static void ValidarEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
             {
                 throw new DomainException("E-mail é obrigatório.");
+            }
+        }
+
+        public static void ValidarTelefone(string telefone)
+        {
+            if (string.IsNullOrWhiteSpace(telefone))
+            {
+                throw new DomainException("Telefone é obrigatório.");
             }
         }
     }
