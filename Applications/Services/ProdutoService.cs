@@ -9,10 +9,26 @@ namespace ReHope.Applications.Services
     public class ProdutoService
     {
         private readonly IProdutoRepository _repository;
+        private readonly IContentSafetyRepository _contentSafety;
 
-        public ProdutoService(IProdutoRepository repository)
+        public ProdutoService(IProdutoRepository repository, IContentSafetyRepository contentSafety)
         {
             _repository = repository;
+            _contentSafety = contentSafety;
+        }
+
+        private async Task ValidarConteudoProdutoAsync(string nome, string descricao)
+        {
+            string textoParaValidar = $@"
+                Nome do produto: {nome}
+                Descrição do produto: {descricao}";
+
+            var resultado = await _contentSafety.ValidarConteudo(textoParaValidar);
+
+            if (!resultado.aprovado)
+            {
+                throw new DomainException(resultado.msg);
+            }
         }
 
         public List<LerProdutoDto> Listar()
@@ -83,9 +99,11 @@ namespace ReHope.Applications.Services
 
         //adicionar
                                                 //  Guid usuarioId,
-        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId)
+        public async Task<LerProdutoDto> Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId)
         {
             ValidarCadastro(produtoDto);
+
+            await ValidarConteudoProdutoAsync(produtoDto.NomeProduto, produtoDto.Descricao);
 
             Produto produto = new Produto
             {

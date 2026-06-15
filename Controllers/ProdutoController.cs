@@ -73,7 +73,7 @@ namespace ReHope.Controllers
         [Authorize]
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public ActionResult Adicionar([FromForm] CriarProdutoDto produtoDto)
+        public async Task<ActionResult> Adicionar([FromForm] CriarProdutoDto produtoDto)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace ReHope.Controllers
                 int localizacaoId = produtoDto.LocalizacaoID;
 
                 // adicionar usuarioId
-                _service.Adicionar(produtoDto, usuarioId, categoriaId, localizacaoId);
+                await _service.Adicionar(produtoDto, usuarioId, categoriaId, localizacaoId);
 
                 return StatusCode(201);
             }
