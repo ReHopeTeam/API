@@ -6,7 +6,7 @@
         public decimal Preco { get; set; }
         public string Descricao { get; set; } = null!;
         public string? Tamanho { get; set; }
-        public string? Imagem { get; set; }
+        public IFormFile Imagem { get; set; } = null!;
         public int CategoriaID { get; set; }
         public int LocalizacaoID { get; set; }
     }

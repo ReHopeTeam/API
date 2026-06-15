@@ -1,6 +1,6 @@
 ﻿namespace ReHope.Interfaces
 {
-    public class IContentSafetyRepository
+    public interface IContentSafetyRepository
     {
         Task<(bool aprovado, string msg)> ValidarConteudo(string texto);
     }
