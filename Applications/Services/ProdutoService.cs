@@ -82,11 +82,11 @@ namespace ReHope.Applications.Services
         }
 
         //adicionar
-        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId, int codigo)
+                                                //  Guid usuarioId,
+        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId)
         {
             ValidarCadastro(produtoDto);
 
-            // ta errado
             Produto produto = new Produto
             {
                 NomeProduto = produtoDto.NomeProduto,
@@ -96,7 +96,8 @@ namespace ReHope.Applications.Services
                 Imagem = produtoDto.Imagem,
                 StatusProduto = true,
                 UsuarioID = usuarioId,
-                CategoriaID = produtoDto.CategoriaID
+                CategoriaID = produtoDto.CategoriaID,
+                LocalizacaoID = produtoDto.LocalizacaoID
             };
 
             _repository.Adicionar(produto);

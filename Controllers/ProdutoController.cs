@@ -31,7 +31,7 @@ namespace ReHope.Controllers
             return Guid.Parse(idTexto);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult<List<LerProdutoDto>> Listar()
         {
@@ -39,7 +39,7 @@ namespace ReHope.Controllers
             return Ok(produtos);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<LerProdutoDto> ObterPorId(Guid id)
         {
@@ -54,22 +54,23 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
-        //[HttpGet("{codigo}")]
-        //public ActionResult<LerProdutoDto> obterPorCodigo(int codigo)
-        //{
-        //    try
-        //    {
-        //        LerProdutoDto produto = _service.ObterPorCodigo(codigo);
-        //        return Ok(produto);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return NotFound(ex.Message);
-        //    }
-        //}
+        // para um get diferente do id, precisamos utilizar o -/-, assim o código consegue diferenciar os números
+        [Authorize]
+        [HttpGet("codigo/{codigo}")]
+        public ActionResult<LerProdutoDto> ObterPorCodigo(int codigo)
+        {
+            try
+            {
+                LerProdutoDto produto = _service.ObterPorCodigo(codigo);
+                return Ok(produto);
+            }
+            catch (DomainException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Consumes("multipart/form-data")]
         public ActionResult Adicionar([FromForm] CriarProdutoDto produtoDto)
@@ -79,9 +80,9 @@ namespace ReHope.Controllers
                 Guid usuarioId = ObterUsuarioIdLogado();
                 int categoriaId = produtoDto.CategoriaID;
                 int localizacaoId = produtoDto.LocalizacaoID;
-                int codigo = produtoDto.Codigo;
 
-                _service.Adicionar(produtoDto, usuarioId, categoriaId, localizacaoId, codigo);
+                // adicionar usuarioId
+                _service.Adicionar(produtoDto, usuarioId, categoriaId, localizacaoId);
 
                 return StatusCode(201);
             }
@@ -91,7 +92,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         [Consumes("multipart/form-data")]
         public ActionResult Atualizar(Guid id, [FromForm] AtualizarProdutoDto produtoDto)
@@ -107,7 +108,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Remover(Guid id)
         {
