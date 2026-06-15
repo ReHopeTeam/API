@@ -27,7 +27,8 @@ namespace ReHope.Applications.Services
                 UsuarioID = usuario.UsuarioID,
                 Nome = usuario.Nome,
                 Email = usuario.Email,
-                Telefone = usuario.Telefone
+                Telefone = usuario.Telefone,
+                StatusUsuario = usuario.StatusUsuario
             }).ToList();
 
             return usuariosDto;
@@ -47,7 +48,8 @@ namespace ReHope.Applications.Services
                 UsuarioID = usuario.UsuarioID,
                 Nome = usuario.Nome,
                 Email = usuario.Email,
-                Telefone = usuario.Telefone
+                Telefone = usuario.Telefone,
+                StatusUsuario = usuario.StatusUsuario
             };
 
             return usuarioDto;
@@ -67,7 +69,8 @@ namespace ReHope.Applications.Services
                 UsuarioID = usuario.UsuarioID,
                 Nome = usuario.Nome,
                 Email = usuario.Email,
-                Telefone = usuario.Telefone
+                Telefone = usuario.Telefone,
+                StatusUsuario = usuario.StatusUsuario
             };
 
             return usuarioDto;
