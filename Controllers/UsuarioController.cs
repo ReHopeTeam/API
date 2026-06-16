@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReHope.Applications.Services;
 using ReHope.DTOs.UsuarioDto;
@@ -17,6 +18,7 @@ namespace ReHope.Controllers
             _service = service;
         }
 
+        
         [HttpGet]
         public ActionResult<List<LerUsuarioDto>> Listar()
         {
@@ -24,6 +26,7 @@ namespace ReHope.Controllers
             return Ok(usuarios);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<LerUsuarioDto> ObterPorId(Guid id)
         {
@@ -38,6 +41,7 @@ namespace ReHope.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("email/{email}")]
         public ActionResult<LerUsuarioDto> ObterPorEmail(string email)
         {
@@ -52,6 +56,7 @@ namespace ReHope.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Adicionar(CriarUsuarioDto dto)
         {
@@ -66,6 +71,7 @@ namespace ReHope.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Atualizar(Guid id, CriarUsuarioDto dto)
         {
@@ -80,6 +86,7 @@ namespace ReHope.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Remover(Guid id)
         {

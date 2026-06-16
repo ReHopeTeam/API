@@ -20,9 +20,9 @@ namespace ReHope.Applications.Services
 
         private static bool VerificarSenha(string senhaDigitada, byte[] senhaBanco)
         {
-            using var sha = System.Security.Cryptography.SHA1.Create();
+            using var sha = System.Security.Cryptography.SHA256.Create();
 
-            var hashDigitado = sha.ComputeHash(System.Text.Enconding.UTF8.GetBytes(senhaDigitada));
+            var hashDigitado = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(senhaDigitada));
 
             return hashDigitado.SequenceEqual(senhaBanco);
         }
@@ -36,6 +36,18 @@ namespace ReHope.Applications.Services
                 throw new DomainException("Email ou senha inválidos");
             }
 
+            if (!VerificarSenha(loginDto.Senha, usuario.Senha))
+            {
+                throw new DomainException("E-mail ou senha inválidos.");
+            }
+
+            if (usuario.StatusUsuario == false)
+            {
+                throw new DomainException("Usuário está inativado.");
+            }
+
+
+            // var token = _tokenJwt.GerarToken(usuario);
             var token = _tokenJwt.GerarToken(usuario);
 
             TokenDto novoToken = new TokenDto { Token = token  };

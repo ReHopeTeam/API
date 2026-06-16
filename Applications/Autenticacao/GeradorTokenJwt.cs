@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using ReHope.Domains;
 using ReHope.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,13 +16,15 @@ namespace ReHope.Applications.Autenticacao
             _config = config;
         }
 
-        public string GerarToken(Token token)
+        public string GerarToken(Usuario usuario)
         {
             var chave = _config["Jwt:Key"]!;
 
             var issuer = _config["Jwt:Issuer"]!;
 
             var audience = _config["Jwt:Audience"]!;
+
+            var expiraEmMinutos = int.Parse(_config["Jwt:ExpiraEmMinutos"]!);
 
             var keyBytes = Encoding.UTF8.GetBytes(chave);
 
@@ -48,6 +51,7 @@ namespace ReHope.Applications.Autenticacao
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
+                expires: DateTime.Now.AddMinutes(expiraEmMinutos),
                 signingCredentials: credencials
              );
 

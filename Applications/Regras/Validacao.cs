@@ -16,7 +16,7 @@ namespace ReHope.Applications.Regras
         {
             if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
             {
-                throw new DomainException("E-mail é obrigatório.");
+                throw new DomainException("Endereço de e-mail é obrigatório.");
             }
         }
 
