@@ -2,5 +2,6 @@
 {
     public class CriarLocalizacaoDto
     {
+        public string NomeLocalizacao { get; set; }
     }
 }

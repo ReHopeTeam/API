@@ -1,6 +1,9 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using ReHope.Applications.Services;
 using ReHope.Contexts;
+using ReHope.Interfaces;
+using ReHope.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,9 @@ builder.Services.AddCors(options =>
 });
 
 
+// Localização
+builder.Services.AddScoped<ILocalizacaoRepository, LocalizacaoRepository>();
+builder.Services.AddScoped<LocalizacaoService>();
 
 var app = builder.Build();
 
