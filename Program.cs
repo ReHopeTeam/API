@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using ReHope.Applications.ContentSafety;
+using ReHope.Applications.ImageDescription;
 using ReHope.Applications.Services;
 using ReHope.Contexts;
 using ReHope.Interfaces;
@@ -23,8 +24,11 @@ builder.Services.AddDbContext<ReHopeContext>(options => options.UseSqlServer(con
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<ProdutoService>();
 
-// IA
+// IA de moderação
 builder.Services.AddScoped<IContentSafetyRepository, ContentSafetyService>();
+
+// IA de descrição
+builder.Services.AddScoped<IImageDescriptionRepository, ImageDescriptionService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

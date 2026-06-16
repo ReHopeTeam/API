@@ -4,7 +4,7 @@
     {
         public string NomeProduto { get; set; } = null!;
         public decimal Preco { get; set; }
-        public string Descricao { get; set; } = null!;
+        public string? Descricao { get; set; }
         public string? Tamanho { get; set; }
         public IFormFile Imagem { get; set; } = null!;
         public int CategoriaID { get; set; }

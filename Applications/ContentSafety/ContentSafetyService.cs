@@ -1,4 +1,5 @@
-﻿using ReHope.Interfaces;
+﻿using Google.GenAI;
+using ReHope.Interfaces;
 
 namespace ReHope.Applications.ContentSafety
 {
@@ -22,7 +23,7 @@ namespace ReHope.Applications.ContentSafety
 
             try
             {
-                Client client = new Client(_apiKey: _apiKey);
+                var client = new Client(apiKey: _apiKey);
 
                 string prompt = $@"Você é um moderador de conteúdo extremamente rigoroso para uma plataforma pública.
 

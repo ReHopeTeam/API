@@ -2,7 +2,6 @@
 {
     public class ConverterImagemParaBytes
     {
-        //não está sendo utilizada em lugar nenhum
         public static byte[] ConverterImagem(IFormFile imagem)
         {
             using var ms = new MemoryStream();

@@ -1,4 +1,5 @@
 ﻿using ReHope.Applications.Conversoes;
+using ReHope.Applications.ImageDescription;
 using ReHope.Domains;
 using ReHope.DTOs.ProdutoDto;
 using ReHope.Exceptions;
@@ -10,11 +11,13 @@ namespace ReHope.Applications.Services
     {
         private readonly IProdutoRepository _repository;
         private readonly IContentSafetyRepository _contentSafety;
+        private readonly IImageDescriptionRepository _imageDescription;
 
-        public ProdutoService(IProdutoRepository repository, IContentSafetyRepository contentSafety)
+        public ProdutoService(IProdutoRepository repository, IContentSafetyRepository contentSafety, IImageDescriptionRepository imageDescription)
         {
             _repository = repository;
             _contentSafety = contentSafety;
+            _imageDescription = imageDescription;
         }
 
         private async Task ValidarConteudoProdutoAsync(string nome, string descricao)
@@ -29,6 +32,23 @@ namespace ReHope.Applications.Services
             {
                 throw new DomainException(resultado.msg);
             }
+        }
+
+        private async Task<string> GerarDescricaoProdutoAsync(CriarProdutoDto produtoDto)
+        {
+            if (!string.IsNullOrWhiteSpace(produtoDto.Descricao))
+            {
+                return produtoDto.Descricao;
+            }
+
+            if (string.IsNullOrWhiteSpace(produtoDto.Descricao)
+                 && (produtoDto.Imagem == null || produtoDto.Imagem.Length == 0))
+            {
+                throw new DomainException(
+                    "Informe uma descrição ou envie uma imagem para gerar a descrição automaticamente.");
+            }
+
+            return await _imageDescription.CriarDescricao(produtoDto.Imagem);
         }
 
         public List<LerProdutoDto> Listar()
@@ -76,9 +96,11 @@ namespace ReHope.Applications.Services
                 throw new DomainException("Preço deve ser maior que zero.");
             }
 
-            if (string.IsNullOrWhiteSpace(produtoDto.Descricao))
+            if ((string.IsNullOrWhiteSpace(produtoDto.Descricao))
+                && (produtoDto.Imagem == null || produtoDto.Imagem.Length == 0))
             {
-                throw new DomainException("Descrição é obrigatória.");
+                throw new DomainException(
+                    "Informe uma descrição ou envie uma imagem para gerar a descrição automaticamente.");
             }
 
             if (produtoDto.Tamanho == null)
@@ -97,21 +119,21 @@ namespace ReHope.Applications.Services
             }
         }
 
-        //adicionar
-                                                //  Guid usuarioId,
         public async Task<LerProdutoDto> Adicionar(CriarProdutoDto produtoDto, Guid usuarioId, int categoriaId, int localizacaoId)
         {
             ValidarCadastro(produtoDto);
 
-            await ValidarConteudoProdutoAsync(produtoDto.NomeProduto, produtoDto.Descricao);
+            string descricao = await GerarDescricaoProdutoAsync(produtoDto);
+
+            await ValidarConteudoProdutoAsync(produtoDto.NomeProduto, descricao);
 
             Produto produto = new Produto
             {
                 NomeProduto = produtoDto.NomeProduto,
                 Preco = produtoDto.Preco,
-                Descricao = produtoDto.Descricao,
+                Descricao = descricao,
                 Tamanho = produtoDto.Tamanho,
-                Imagem = produtoDto.Imagem,
+                Imagem = ConverterImagemParaBytes.ConverterImagem(produtoDto.Imagem),
                 StatusProduto = true,
                 UsuarioID = usuarioId,
                 CategoriaID = produtoDto.CategoriaID,
@@ -152,7 +174,7 @@ namespace ReHope.Applications.Services
                 throw new DomainException("Preço deve ser maior que zero.");
             }
 
-            if (produtoDto.Descricao.Length < 0)
+            if (string.IsNullOrWhiteSpace(produtoDto.Descricao))
             {
                 throw new DomainException("Produto precisa de uma descrição.");
             }
@@ -164,7 +186,7 @@ namespace ReHope.Applications.Services
 
             if (produtoDto.Imagem != null && produtoDto.Imagem.Length > 0)
             {
-                produtoBanco.Imagem = produtoDto.Imagem;
+                produtoBanco.Imagem = ConverterImagemParaBytes.ConverterImagem(produtoDto.Imagem);
             }
 
             if (produtoDto.StatusProduto != null)

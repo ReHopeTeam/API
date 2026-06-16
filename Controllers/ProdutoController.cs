@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReHope.Applications.Services;
 using ReHope.DTOs.ProdutoDto;
 using ReHope.Exceptions;
+using ReHope.Interfaces;
 using System.Security.Claims;
 
 namespace ReHope.Controllers
@@ -81,7 +82,6 @@ namespace ReHope.Controllers
                 int categoriaId = produtoDto.CategoriaID;
                 int localizacaoId = produtoDto.LocalizacaoID;
 
-                // adicionar usuarioId
                 await _service.Adicionar(produtoDto, usuarioId, categoriaId, localizacaoId);
 
                 return StatusCode(201);
