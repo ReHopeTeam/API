@@ -1,6 +1,9 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using ReHope.Applications.Services;
 using ReHope.Contexts;
+using ReHope.Interfaces;
+using ReHope.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +35,10 @@ builder.Services.AddCors(options =>
         });
 });
 
+
+// Tipo Produto
+builder.Services.AddScoped<ITipoProdutoRepository, TipoProdutoRepository>();
+builder.Services.AddScoped<TipoProdutoService>();
 
 
 var app = builder.Build();
