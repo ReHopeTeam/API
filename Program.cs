@@ -11,6 +11,7 @@ using ReHope.Repository;
 using System.Text;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // carregando o .env
@@ -21,6 +22,8 @@ string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING"
 
 // conexao com o banco 
 builder.Services.AddDbContext<ReHopeContext>(options => options.UseSqlServer(connectionString));
+
+// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -62,12 +65,15 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<ILogProdutoRepository, LogProdutoRepository>();
 builder.Services.AddScoped<LogProdutoService>();
 
-// Autenticação 
 // Tipo Produto
 builder.Services.AddScoped<ITipoProdutoRepository, TipoProdutoRepository>();
 builder.Services.AddScoped<TipoProdutoService>();
 
-// Autenticaï¿½ï¿½o 
+// Categoria
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<CategoriaService>();
+
+// Autenticacao
 builder.Services.AddScoped<GeradorTokenJwt>();
 builder.Services.AddScoped<AutenticacaoService>();
 

@@ -28,6 +28,6 @@ namespace ReHope.Repository
                    .ToList();
             return logProdutoAlteracao;
 
-        }
+        }   
     }
 }
