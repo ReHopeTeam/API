@@ -26,6 +26,7 @@ namespace ReHope.Controllers
             return Ok(logProdutoDtos);
         }
 
+
         [Authorize]
         [HttpGet("produto/{id}")]
         public ActionResult<List<LerLogProdutoDto>> BuscarLogProdutoPorPodutoId(Guid produtoId)

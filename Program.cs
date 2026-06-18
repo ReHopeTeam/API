@@ -10,6 +10,7 @@ using ReHope.Interfaces;
 using ReHope.Repository;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // carregando o .env
