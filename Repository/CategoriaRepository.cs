@@ -1,6 +1,10 @@
-﻿namespace ReHope.Repository
+﻿using ReHope.Contexts;
+using ReHope.Domains;
+using ReHope.Interfaces;
+
+namespace ReHope.Repository
 {
-    public class CategoriaRepository
+    public class CategoriaRepository : ICategoriaRepository
     {
     }
 }
