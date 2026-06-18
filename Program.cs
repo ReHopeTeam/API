@@ -1,6 +1,9 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using ReHope.Applications.Services;
 using ReHope.Contexts;
+using ReHope.Interfaces;
+using ReHope.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +17,6 @@ string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING"
 builder.Services.AddDbContext<ReHopeContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
-
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +32,11 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
 });
+
+
+// Categoria
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<CategoriaService>();
 
 
 
