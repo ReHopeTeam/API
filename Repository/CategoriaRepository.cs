@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReHope.Contexts;
 using ReHope.Domains;
+using ReHope.DTOs.UsuarioDto;
+using ReHope.Exceptions;
 using ReHope.Interfaces;
 
 namespace ReHope.Repository
@@ -23,16 +25,27 @@ namespace ReHope.Repository
 
         public Categoria? ObterPorId(int id)
         {
-            Categoria categoria = _context.Categoria.FirstOrDefault(c => c.CategoriaID == id);
+            Categoria categoria = _context.Categoria
+                .Include(c => c.TipoProduto)
+                .FirstOrDefault(c => c.CategoriaID == id);
 
             return categoria;
         }
 
         public Categoria? ObterCategoriaPorTipo(string nomeTipo)
         {
-            Categoria categorias = _context.Categoria.FirstOrDefault(c => c.TipoProduto.NomeTipo == nomeTipo);
+            Categoria categorias = _context.Categoria
+                .Include(c => c.TipoProduto)
+                .FirstOrDefault(c => c.TipoProduto.NomeTipo == nomeTipo);
 
             return categorias;
+        }
+
+        public Categoria? BuscarPorNome(string nomeCategoria)
+        {
+            return _context.Categoria
+                .Include(c => c.TipoProduto)
+                .FirstOrDefault(categoria => categoria.NomeCategoria == nomeCategoria);
         }
 
         public bool NomeCategoriaExiste(string nome, int? categoriaIdAtual = null)
@@ -70,7 +83,9 @@ namespace ReHope.Repository
 
         public void Remover (int id)
         {
-            Categoria categoriaBanco = _context.Categoria.FirstOrDefault(c => c.CategoriaID == id);
+            Categoria categoriaBanco = _context.Categoria
+                .Include(c => c.TipoProduto)
+                .FirstOrDefault(c => c.CategoriaID == id);
 
             if(categoriaBanco == null)
             {

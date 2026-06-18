@@ -10,6 +10,8 @@ namespace ReHope.Interfaces
 
         Categoria? ObterCategoriaPorTipo(string nomeTipo);
 
+        Categoria? BuscarPorNome(string nomeCategoria);
+
         bool NomeCategoriaExiste(string nome, int? categoriaIdAtual = null);
 
         void Adicionar (Categoria categoria);

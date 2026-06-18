@@ -1,6 +1,6 @@
 ﻿namespace ReHope.DTOs.CategoriaDto
 {
-    public class CriarCategoriaDtos
+    public class CriarCategoriaDto
     {
         public string NomeCategoria { get; set; } = string.Empty;
 
