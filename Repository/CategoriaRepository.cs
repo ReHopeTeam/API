@@ -62,6 +62,11 @@ namespace ReHope.Repository
             return consulta.Any(c => c.NomeCategoria == nome);
         }
 
+        public bool TipoProdutoExiste(int idTipoProduto)
+        {
+            return _context.TipoProduto.Any( tp => tp.TipoProdutoID == idTipoProduto)   ;
+        }
+
         public void Adicionar(Categoria categoria)
         {
             _context.Categoria.Add(categoria);

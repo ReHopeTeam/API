@@ -18,6 +18,7 @@ namespace ReHope.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<List<LerLocalizacaoDto>> Listar()
         {
@@ -25,6 +26,7 @@ namespace ReHope.Controllers
             return Ok(localizacoes);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<LerLocalizacaoDto> BuscarPorID(int id)
         {
@@ -36,8 +38,8 @@ namespace ReHope.Controllers
             return Ok(localizacoes);
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public ActionResult Adicionar(CriarLocalizacaoDto criarDto)
         {
             try
@@ -51,8 +53,8 @@ namespace ReHope.Controllers
             }
         }
 
-        [HttpPut("{id}")]
         [Authorize]
+        [HttpPut("{id}")]
         public ActionResult Atualizar(int id, CriarLocalizacaoDto criarDto)
         {
             try
@@ -67,8 +69,8 @@ namespace ReHope.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
         [Authorize]
+        [HttpDelete("{id}")]
         public ActionResult Remover(int id)
         {
             try

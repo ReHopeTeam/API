@@ -20,7 +20,7 @@ namespace ReHope.Controllers
             _service = service;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult<List<LerCategoriaDto>> Listar()
         {
@@ -28,7 +28,7 @@ namespace ReHope.Controllers
             return Ok(categoriaDto);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<LerCategoriaDto> ObterPorId(int id)
         {
@@ -44,7 +44,7 @@ namespace ReHope.Controllers
 
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("nomeCategoria/{nomeCategoria}")]
         public ActionResult<LerCategoriaDto> BuscarPorNome(string nomeCategoria)
         {
@@ -60,7 +60,7 @@ namespace ReHope.Controllers
         }
 
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult Adicionar(CriarCategoriaDto categoriaDto)
         {
@@ -75,7 +75,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Atualizar(int id, CriarCategoriaDto categoriaDto)
         {
@@ -89,8 +89,8 @@ namespace ReHope.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    
-        //[Authorize]
+
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Remover(int id)
         {

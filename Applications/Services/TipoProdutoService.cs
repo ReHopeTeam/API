@@ -54,7 +54,7 @@ namespace ReHope.Applications.Services
                 .SelectMany(tp => tp.Categoria)
                 .Select(c => new LerCategoriaDto
                 {
-                    CategoriaId = c.CategoriaID,
+                    CategoriaID = c.CategoriaID,
                     NomeCategoria = c.NomeCategoria
                 }).ToList();
 

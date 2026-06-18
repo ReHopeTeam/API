@@ -15,6 +15,8 @@ namespace ReHope.Interfaces
 
         bool NomeCategoriaExiste(string nome, int? categoriaIdAtual = null);
 
+        bool TipoProdutoExiste(int idTipoProduto);
+
         void Adicionar (Categoria categoria);
 
         void Atualizar (Categoria categoria);

@@ -1,22 +1,16 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ReHope.Applications.Autenticacao;
-=======
 using ReHope.Applications.ContentSafety;
 using ReHope.Applications.ImageDescription;
->>>>>>> origin/feature/produto
 using ReHope.Applications.Services;
 using ReHope.Contexts;
 using ReHope.Interfaces;
 using ReHope.Repository;
-<<<<<<< HEAD
 using System.Text;
-=======
->>>>>>> origin/feature/produto
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,19 +25,7 @@ builder.Services.AddDbContext<ReHopeContext>(options => options.UseSqlServer(con
 
 // Add services to the container.
 
-<<<<<<< HEAD
-=======
-// Produto
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<ProdutoService>();
 
-// IA de moderação
-builder.Services.AddScoped<IContentSafetyRepository, ContentSafetyService>();
-
-// IA de descrição
-builder.Services.AddScoped<IImageDescriptionRepository, ImageDescriptionService>();
-
->>>>>>> origin/feature/produto
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -74,6 +56,15 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Produto
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ProdutoService>();
+
+// IA de moderação
+builder.Services.AddScoped<IContentSafetyRepository, ContentSafetyService>();
+
+// IA de descrição
+builder.Services.AddScoped<IImageDescriptionRepository, ImageDescriptionService>();
 
 // Add services to the container.
 // Usuário

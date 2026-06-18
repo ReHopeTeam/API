@@ -12,10 +12,12 @@ namespace ReHope.Applications.Services
     public class CategoriaService
     {
         private readonly ICategoriaRepository _repository;
+        private readonly ITipoProdutoRepository _repositoryTipoProduto;
 
-        public CategoriaService(ICategoriaRepository repository)
+        public CategoriaService(ICategoriaRepository repository, ITipoProdutoRepository repositoryTipoProduto)
         {
             _repository = repository;
+            _repositoryTipoProduto = repositoryTipoProduto;
         }
 
         public List<LerCategoriaDto> Listar()
@@ -78,7 +80,7 @@ namespace ReHope.Applications.Services
 
             if (categoria == null)
             {
-                throw new DomainException("Usuário não encontrado.");
+                throw new DomainException("Categoria não encontrado.");
             }
 
             LerCategoriaDto categoriaDto = new LerCategoriaDto
@@ -100,6 +102,20 @@ namespace ReHope.Applications.Services
             if (categoriaExiste != null)
                 throw new DomainException("Já existe uma categoria cadastrada com esse nome.");
             //condicional para validar se o tp produto existe
+
+            //TipoProduto tipoProdutoExiste = _repositoryTipoProduto.BuscarPorID(tipoProdutoDto.TipoId);
+
+            //if( tipoProdutoExiste != null)
+            //{
+            //    throw new DomainException("Esse tipo produto não existe.");
+            //}
+
+            if (!_repository.TipoProdutoExiste(categoriaDto.TipoProdutoID))
+            {
+                throw new DomainException("Esse tipo produto não existe.");
+            }
+
+
 
             Categoria categoria = new Categoria
             {

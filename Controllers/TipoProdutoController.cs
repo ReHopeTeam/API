@@ -19,7 +19,7 @@ namespace ReHope.Controllers
             _service = service;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult<List<LerTipoProdutoDto>> Listar()
         {
@@ -27,7 +27,7 @@ namespace ReHope.Controllers
             return Ok(tipos);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<LerTipoProdutoDto> BuscarPorID(int id)
         {
@@ -42,7 +42,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult Adicionar(CriarTipoProdutoDto dto)
         {
@@ -57,7 +57,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Atualizar(int id, CriarTipoProdutoDto dto)
         {
@@ -72,7 +72,7 @@ namespace ReHope.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Remover(int id)
         {
