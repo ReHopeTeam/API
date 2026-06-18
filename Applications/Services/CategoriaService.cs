@@ -97,15 +97,14 @@ namespace ReHope.Applications.Services
             Validacao.ValidarNome(categoriaDto.NomeCategoria);
 
             Categoria categoriaExiste = _repository.BuscarPorNome(categoriaDto.NomeCategoria);
-
             if (categoriaExiste != null)
-            {
                 throw new DomainException("Já existe uma categoria cadastrada com esse nome.");
-            }
+            //condicional para validar se o tp produto existe
 
             Categoria categoria = new Categoria
             {
-                NomeCategoria = categoriaDto.NomeCategoria
+                NomeCategoria = categoriaDto.NomeCategoria,
+                TipoProdutoID = categoriaDto.TipoProdutoID
             };
 
             _repository.Adicionar(categoria);
